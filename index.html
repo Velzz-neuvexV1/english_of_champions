@@ -404,7 +404,6 @@
       gap: 12px;
     }
 
-    /* KUSTOMISASI UNTUK GAMBAR LOGO ASLI */
     .arena-logo {
       width: 65px;
       height: 65px;
@@ -485,7 +484,6 @@
 
     .team-card:hover { border-color: var(--border-strong); }
 
-    /* minimalist rank pill via a small counter box before the rank text */
     .team-card { position: relative; padding-left: 52px; }
 
     .team-card::before {
@@ -642,7 +640,6 @@
       font-weight: 500;
     }
 
-    /* LOCKED — muted, not a bright flash. Subtle amber tint + minimal lock icon */
     .vault-card.locked {
       background: var(--amber-soft) !important;
       border-color: rgba(245, 158, 11, 0.3);
@@ -701,7 +698,7 @@
     }
 
     /* ==========================================
-       MODAL — Sleek Floating Card
+       MODAL — DITARUH DI ATAS AGAR AMAN DARI KEYBOARD IFP
        ========================================== */
     .modal-overlay {
       position: fixed;
@@ -709,9 +706,11 @@
       background: rgba(9, 12, 17, 0.72);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start; /* Posisi di paling atas */
+      padding-top: 35px; /* Jarak dari atas layar */
       z-index: 3000;
-      padding: 15px;
+      padding-left: 15px;
+      padding-right: 15px;
       animation: overlayFade 0.2s var(--ease-soft) both;
     }
 
@@ -726,10 +725,12 @@
       border-radius: 14px;
       width: 100%;
       max-width: 520px;
-      padding: 28px 26px 26px;
+      padding: 24px;
       position: relative;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
       animation: modalRise 0.28s var(--ease-out) both;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     @keyframes modalRise {
@@ -737,7 +738,6 @@
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* progress-bar style timer at top of the quiz modal (visual only, 15s CSS clock) */
     .modal-timer-track {
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -745,20 +745,6 @@
       background: var(--border);
       border-radius: 14px 14px 0 0;
       overflow: hidden;
-    }
-
-    .modal-timer-track .modal-timer-fill {
-      height: 100%;
-      width: 100%;
-      background: var(--amber);
-      transform-origin: left center;
-      animation: modalTimerShrink 15s linear forwards;
-    }
-
-    @keyframes modalTimerShrink {
-      from { transform: scaleX(1); background: var(--amber); }
-      70%  { background: var(--amber); }
-      100% { transform: scaleX(0); background: var(--coral); }
     }
 
     .modal-close-btn {
@@ -787,7 +773,7 @@
     }
 
     .modal-title-quiz {
-      margin: 8px 34px 0 0;
+      margin: 4px 34px 0 0;
       color: var(--text-hi);
       font-size: 15px;
       font-weight: 700;
@@ -812,12 +798,22 @@
 
     .modal-body-text strong { color: var(--text-hi); }
 
+    /* STRUKTUR TATA LETAK MODAL KUIS (SOAL DI ATAS, INPUT LANGSUNG DI BAWAHNYA) */
+    .q-text-container {
+      background: var(--ink-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      margin: 14px 0;
+      text-align: center;
+    }
+
     .q-text {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
-      margin: 20px 0;
       color: var(--text-hi);
       font-family: 'Plus Jakarta Sans', sans-serif;
+      margin: 0;
     }
 
     .field-label {
@@ -828,30 +824,31 @@
       font-weight: 600;
       letter-spacing: 0.4px;
       text-transform: uppercase;
+      text-align: left;
     }
 
     .timer-sec-inline {
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      color: var(--text-low);
+      color: var(--amber);
       display: block;
       text-align: right;
       margin-top: 4px;
+      font-weight: 600;
     }
 
-    /* FORMAT ISIAN JAWABAN */
     .answer-input-container {
-      margin-top: 18px;
+      margin-top: 10px;
       text-align: left;
     }
 
     .answer-input-container input[type="text"] {
-      font-size: 17px;
-      padding: 13px;
+      font-size: 16px;
+      padding: 12px;
       border: 1px solid var(--primary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
       font-family: 'JetBrains Mono', monospace;
     }
 
@@ -916,14 +913,14 @@
   </style>
 </head>
 <body>
-<!-- OVERLAY MULAI GAME -->
-<div id="start-overlay" class="narration-screen" style="z-index: 9999;">
-  <div class="narration-inner">
-    <h1 class="narration-title">English of Champions</h1>
-    <p style="color: var(--text-mid); font-size: 15px; margin-bottom: 24px;">Klik tombol di bawah untuk memulai permainan dan mengaktifkan suara.</p>
-    <button class="btn" style="margin-top: 0;" onclick="initGameWithAudio()">Mulai Permainan</button>
+  <!-- OVERLAY MULAI GAME -->
+  <div id="start-overlay" class="narration-screen" style="z-index: 9999;">
+    <div class="narration-inner">
+      <h1 class="narration-title">English of Champions</h1>
+      <p style="color: var(--text-mid); font-size: 15px; margin-bottom: 24px;">Klik tombol di bawah untuk memulai permainan, mengaktifkan suara, dan masuk layar penuh.</p>
+      <button class="btn" style="margin-top: 0;" onclick="initGameWithAudio()">Mulai Permainan</button>
+    </div>
   </div>
-</div>
 
   <!-- ELEMENT AUDIO -->
   <audio id="sfx-bgm" src="bgm.mp3" loop preload="auto"></audio>
@@ -973,10 +970,9 @@
   <!-- SCREEN 2: ARENA PERTANDINGAN -->
   <div id="arena-screen" class="screen arena-container hidden">
 
-    <!-- ARENA TOP BAR DENGAN LOGO GAMBAR ASLI & HEADER SESUAI INSTRUKSI -->
+    <!-- ARENA TOP BAR -->
     <div class="arena-top-bar">
       <div class="arena-title-box">
-        <!-- Gantilah 'logo.png' dengan nama file gambar logo kamu -->
         <img src="logo.png" alt="Logo Vell Market" class="arena-logo">
         <div class="arena-title-text">
           <h1>VELL MARKET</h1>
@@ -987,7 +983,10 @@
 
       <div class="timer-center-box" id="game-timer">10 : 00</div>
 
-      <button class="btn-exit-game" onclick="confirmExitGame()">Keluar</button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn-exit-game" style="color: var(--primary); border-color: var(--primary);" onclick="requestFullscreenMode()">Fullscreen</button>
+        <button class="btn-exit-game" onclick="confirmExitGame()">Keluar</button>
+      </div>
     </div>
 
     <!-- LEADERBOARD REAL-TIME CARDS -->
@@ -1007,7 +1006,7 @@
 
   </div>
 
-  <!-- MODAL KUIS ISIAN -->
+  <!-- MODAL KUIS ISIAN (SOAL & INPUT ATAS SANTAI DARI KEYBOARD) -->
   <div id="quiz-modal" class="modal-overlay hidden">
     <div class="modal-content" style="text-align: center;">
       <div class="modal-timer-track"><div class="modal-timer-fill"></div></div>
@@ -1015,20 +1014,25 @@
 
       <h3 id="modal-vault-title" class="modal-title-quiz">VAULT #01</h3>
 
-      <div id="q-text" class="q-text">Pertanyaan...</div>
+      <!-- 1. SOAL DITARUH DI PALING ATAS -->
+      <div class="q-text-container">
+        <div id="q-text" class="q-text">Pertanyaan...</div>
+      </div>
 
-      <div style="text-align:left; margin-bottom:14px;">
+      <!-- 2. KETIK JAWABAN LANGSUNG DI BAWAH SOAL -->
+      <div class="answer-input-container">
+        <label class="field-label">Ketik Jawaban</label>
+        <input type="text" id="user-answer-input" placeholder="TULIS JAWABAN DI SINI..." autocomplete="off">
+        <span class="timer-sec-inline">Sisa waktu: <span id="timer-sec">30</span>s</span>
+      </div>
+
+      <!-- 3. PILIHAN TIM MENJAWAB DITARUH DI BAWAH -->
+      <div style="text-align:left; margin-top:12px; margin-bottom:16px;">
         <label class="field-label">Tim yang Menjawab</label>
         <select id="answering-team-select"></select>
       </div>
 
-      <!-- FORMAT ISIAN TEKS -->
-      <div class="answer-input-container">
-        <label class="field-label">Ketik Jawaban</label>
-        <input type="text" id="user-answer-input" placeholder="Tulis jawaban di sini..." autocomplete="off">
-        <span class="timer-sec-inline">Sisa waktu: <span id="timer-sec">15</span>s</span>
-        <button class="btn-action" onclick="submitAnswer()" style="margin-top:8px;">Kirim Jawaban</button>
-      </div>
+      <button class="btn-action" onclick="submitAnswer()">Kirim Jawaban</button>
     </div>
   </div>
 
@@ -1063,47 +1067,64 @@
     const narrationText = "Selamat datang para pejuang di arena English of Champions! Ini adalah platform web game interaktif, tempat kecerdasan, kecepatan, dan strategi kalian diuji secara nyata. Bersiaplah untuk berebut membuka Vault, menakhlukkan tantangan Bahasa Inggris, dan mengumpulkan poin sebanyak-banyaknya! Siapkan tim kalian, masuk ke arena, dan buktikan siapa sang juara sejati!";
     
     // SOAL DENGAN JAWABAN ISIAN TEKS
-    const vaultQuestions = [
-      { id: 1, pts: 100, text: "Bahasa Inggris dari buah 'Apel' adalah?", ans: "APPLE" },
-      { id: 2, pts: 100, text: "Bahasa Inggris dari buah 'Pisang' adalah?", ans: "BANANA" },
-      { id: 3, pts: 100, text: "Bahasa Inggris dari buah 'Nanas' adalah?", ans: "PINEAPPLE" },
-      { id: 4, pts: 100, text: "Bahasa Inggris dari buah 'Jeruk' adalah?", ans: "ORANGE" },
-      { id: 5, pts: 100, text: "Bahasa Inggris dari buah 'Pepaya' adalah?", ans: "PAPAYA" },
-      { id: 6, pts: 100, text: "Lengkapi kalimat kesukaan: 'I ... apples.' (Saya suka apel)", ans: "LIKE" },
-      { id: 7, pts: 100, text: "Lengkapi kalimat kesukaan: 'They ... mangoes.' (Mereka suka mangga)", ans: "LIKE" },
-      { id: 8, pts: 100, text: "Jika seseorang bertanya 'Do you like strawberry?' dan kamu SUKA, jawabannya 'Yes, I ...'", ans: "DO" },
-      { id: 9, pts: 100, text: "Bahasa Inggris dari buah 'Anggur' adalah?", ans: "GRAPES" },
-      { id: 10, pts: 100, text: "Kata ganti 'He' dalam bahasa Indonesia artinya adalah dia (laki-laki / perempuan)?", ans: "LAKI-LAKI" },
+   const vaultQuestions = [
+  // EASY LEVEL (100 PTS)
+  { id: 1, pts: 100, text: "Bahasa Inggris dari 'segelas teh manis/es teh' adalah a ... of iced tea.", ans: "GLASS" },
+  { id: 2, pts: 100, text: "Bahasa Inggris dari 'sebotol air' adalah a ... of water.", ans: "BOTTLE" },
+  { id: 3, pts: 100, text: "Bahasa Inggris dari 'secangkir kopi' adalah a ... of coffee.", ans: "CUP" },
+  { id: 4, pts: 100, text: "Bahasa Inggris dari 'sepotong pizza' adalah a ... of pizza.", ans: "SLICE" },
+  { id: 5, pts: 100, text: "Bahasa Inggris dari 'sekarung gula' adalah a ... of sugar.", ans: "SACK" },
+  { id: 6, pts: 100, text: "Bahasa Inggris dari 'seikat bayam' adalah a ... of spinach.", ans: "BUNCH" },
+  { id: 7, pts: 100, text: "Bahasa Inggris dari 'semangkuk sup' adalah a ... of soup.", ans: "BOWL" },
+  { id: 8, pts: 100, text: "Bahasa Inggris dari 'sebatang cokelat' adalah a ... of chocolate.", ans: "BAR" },
+  { id: 9, pts: 100, text: "Bahasa Inggris dari 'sesendok gula' adalah a ... of sugar.", ans: "SPOON" },
+  { id: 10, pts: 100, text: "Bahasa Inggris dari 'sebungkus jagung' adalah a ... of corn.", ans: "BAG" },
 
-      { id: 11, pts: 200, text: "Subjek 'He, She, dan Nama Orang' menggunakan kata ... untuk menyatakan suka.", ans: "LIKES" },
-      { id: 12, pts: 200, text: "Lengkapi kalimat: 'Rina ... apples.' (Rina suka apel)", ans: "LIKES" },
-      { id: 13, pts: 200, text: "Lengkapi kalimat: 'Ayu ... watermelon.' (Ayu suka semangka)", ans: "LIKES" },
-      { id: 14, pts: 200, text: "Apa Bahasa Inggris dari buah 'Manggis'?", ans: "MANGOSTEEN" },
-      { id: 15, pts: 200, text: "Apa Bahasa Inggris dari buah 'Belimbing'?", ans: "STARFRUIT" },
-      { id: 16, pts: 200, text: "Apa Bahasa Inggris dari buah 'Jambu Biji'?", ans: "GUAVA" },
-      { id: 17, pts: 200, text: "Jika kamu TIDAK suka pisang, kamu menjawab: 'No, I ... like it.'", ans: "DON'T" },
-      { id: 18, pts: 200, text: "Lengkapi kalimat: 'Faris's father likes ...' (Kelapa)", ans: "COCONUT" },
-      { id: 19, pts: 200, text: "Apa Bahasa Inggris dari buah 'Nangka'?", ans: "JACKFRUIT" },
-      { id: 20, pts: 200, text: "Kata 'She' digunakan sebagai kata ganti untuk (laki-laki / perempuan)?", ans: "PEREMPUAN" },
+  // MEDIUM LEVEL (200 PTS)
+  { id: 11, pts: 200, text: "Kata penakar khusus untuk satu siung bawang putih adalah a ... of garlic.", ans: "CLOVE" },
+  { id: 12, pts: 200, text: "Kata penakar khusus untuk sebatang seledri adalah a ... of celery.", ans: "STALK" },
+  { id: 13, pts: 200, text: "Kata penakar khusus untuk sebongkol kubis/kubis bulat adalah a ... of cabbage.", ans: "HEAD" },
+  { id: 14, pts: 200, text: "Isilah titik-titik berikut: A ... of bread (Sebuah/sepotong roti tawar utuh).", ans: "LOAF" },
+  { id: 15, pts: 200, text: "Isilah titik-titik berikut: A ... of milk (Susu dalam kemasan kotak/karton).", ans: "CARTON" },
+  { id: 16, pts: 200, text: "Isilah titik-titik berikut: A ... of soft drink (Minuman dalam kemasan kaleng).", ans: "CAN" },
+  { id: 17, pts: 200, text: "Benda seperti milk, water, dan bread termasuk dalam kelompok benda ... nouns.", ans: "UNCOUNTABLE" },
+  { id: 18, pts: 200, text: "Benda seperti tomato, onion, dan chili termasuk dalam kelompok benda ... nouns.", ans: "COUNTABLE" },
+  { id: 19, pts: 200, text: "Berdasarkan bacaan, makanan bergizi membantu kita tumbuh sehat dan tetap kuat (stay ...).", ans: "STRONG" },
+  { id: 20, pts: 200, text: "Isilah kata satuan jamak yang tepat: I have four ... of cucumber (4 iris mentimun).", ans: "SLICES" },
 
-      { id: 21, pts: 300, text: "Apa Bahasa Inggris dari buah 'Markisa'?", ans: "PASSION FRUIT" },
-      { id: 22, pts: 300, text: "Apa Bahasa Inggris dari buah 'Salak'?", ans: "SNAKE FRUIT" },
-      { id: 23, pts: 300, text: "Bentuk tidak suka (negatif) dari 'likes' untuk subjek Heru adalah ... (Heru ... like banana)", ans: "DOESN'T" },
-      { id: 24, pts: 300, text: "Dalam buku materi, kata 'eggplant' berarti buah atau sayuran ...", ans: "TERONG" },
-      { id: 25, pts: 300, text: "Lengkapi kalimat negatif: 'My father ... like papaya.' (Ayah saya tidak suka pepaya)", ans: "DOESN'T" },
-      { id: 26, pts: 300, text: "Untuk subjek I, You, We, dan They, kata 'like' digunakan TANPA mengimbuhkan huruf '...' di belakangnya.", ans: "S" },
-      { id: 27, pts: 300, text: "Lengkapi kalimat: 'My grandfather doesn't ... snake fruit.'", ans: "LIKE" },
-      { id: 28, pts: 300, text: "Kalimat tanya untuk menanyakan kesukaan buah kepada teman adalah '... you like apple?'", ans: "DO" },
-      { id: 29, pts: 300, text: "Lengkapi kalimat: 'My grandmother ... orange.' (Nenek saya suka jeruk)", ans: "LIKES" },
-      { id: 30, pts: 300, text: "Lengkapi kalimat: 'Budi ... mango.' (Budi suka mangga)", ans: "LIKES" }
-    ];
+  // HARD LEVEL (300 PTS)
+  { id: 21, pts: 300, text: "Berdasarkan percakapan Rina & Liza, berapa piring nasi goreng di atas meja?", ans: "THREE" },
+  { id: 22, pts: 300, text: "Berdasarkan dialog, Liza sedang menyiapkan makanan untuk waktu makan siang (bahasa Inggris).", ans: "LUNCH" },
+  { id: 23, pts: 300, text: "Irisan tomat dan mentimun digunakan sebagai pelengkap di atas nasi goreng yang disebut ...", ans: "TOPPING" },
+  { id: 24, pts: 300, text: "Lengkapi kalimat dialog Rina: Vegetables are good for our ...", ans: "BODIES" },
+  { id: 25, pts: 300, text: "Lengkapi kalimat dari gambar: She cooked three ... (3 kentang).", ans: "POTATOES" },
+  { id: 26, pts: 300, text: "Lengkapi kalimat dari gambar: My mother added five ... (5 siung bawang putih).", ans: "GARLICS" },
+  { id: 27, pts: 300, text: "Lengkapi kalimat dari gambar: We bought some fresh ... (beberapa tahu segar).", ans: "TOFU" },
+  { id: 28, pts: 300, text: "Bentuk jamak (plural) kata benda dari 'tomato' jika ada dua adalah two ...", ans: "TOMATOES" },
+  { id: 29, pts: 300, text: "Lengkapi kalimat: He eats a ... of noodles for lunch (sepiring mi).", ans: "PLATE" },
+  { id: 30, pts: 300, text: "Lengkapi kalimat: I drink a ... of milk every day (segelas susu).", ans: "GLASS" }
+];
 
     let registeredTeams = [];
     let currentVaultIndex = null;
     let timerInterval = null;
-    let timeLeft = 15;
+    let timeLeft = 30;
     let gameTimeLeft = 1200;
     let mainGameInterval = null;
+
+    // FUNGSI AKTIFKAN FULLSCREEN
+    function requestFullscreenMode() {
+      let elem = document.documentElement;
+      if (!document.fullscreenElement) {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+          elem.msRequestFullscreen();
+        }
+      }
+    }
 
     function playAudioFile(elementId) {
       const audio = document.getElementById(elementId);
@@ -1121,6 +1142,7 @@
     let typeIdx = 0;
 
     function initGameWithAudio() {
+      requestFullscreenMode(); // Otomatis Fullscreen saat klik tombol awal
       document.getElementById('start-overlay').classList.add('hidden');
       document.getElementById('narration-screen').classList.remove('hidden');
       const bgm = document.getElementById('sfx-bgm');
@@ -1318,7 +1340,7 @@
       setTimeout(() => inputField.focus(), 100);
 
       clearInterval(timerInterval);
-      timeLeft = 15;
+      timeLeft = 30;
       document.getElementById('timer-sec').textContent = timeLeft;
 
       timerInterval = setInterval(() => {
